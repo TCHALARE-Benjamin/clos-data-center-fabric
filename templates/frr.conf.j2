@@ -1,0 +1,32 @@
+frr defaults datacenter
+hostname {{ hostname }}
+service integrated-vtysh-config
+!
+interface lo
+ ip address {{ router_id }}/32
+!
+{% for intf in interfaces %}
+interface {{ intf.name }}
+ description {{ intf.desc }}
+ ip address {{ intf.ip }}
+!
+{% endfor %}
+router bgp {{ asn }}
+ bgp router-id {{ router_id }}
+ bgp bestpath as-path multipath-relax
+ no bgp ebgp-requires-policy
+ {% for peer in neighbors %}
+ neighbor {{ peer.ip }} remote-as {{ peer.remote_as }}
+ neighbor {{ peer.ip }} bfd
+ neighbor {{ peer.ip }} timers 3 9
+ {% endfor %}
+ !
+ address-family ipv4 unicast
+  {% for net in networks %}
+  network {{ net }}
+  {% endfor %}
+  maximum-paths 4
+ exit-address-family
+!
+line vty
+!

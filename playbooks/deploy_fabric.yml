@@ -1,0 +1,16 @@
+---
+- name: Render and Deploy eBGP Clos Fabric Configuration
+  hosts: fabric
+  gather_facts: false
+  tasks:
+    - name: Render FRR configuration from Jinja2 template
+      ansible.builtin.template:
+        src: ../templates/frr.conf.j2
+        dest: /etc/frr/frr.conf
+        owner: frr
+        group: frr
+        mode: "0640"
+
+    - name: Apply configuration via frrinit reload
+      ansible.builtin.command: /usr/lib/frr/frrinit.sh reload
+      changed_when: true
