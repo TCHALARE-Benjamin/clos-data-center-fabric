@@ -1,0 +1,4 @@
+bgpd = yes
+bfdd = yes
+ospfd = no
+isisd = no
