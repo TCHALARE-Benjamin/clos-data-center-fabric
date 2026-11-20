@@ -1,0 +1,20 @@
+# Containerlab runtime directories and backup topology files
+clab-*/
+**/.*clab.y*ml.bak
+*.clab.yml.bak
+
+# Python virtual environments and pytest artifacts
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Ansible retry files
+*.retry
+
+# Editor and OS noise
+.vscode/
+.idea/
+*.swp
+.DS_Store
